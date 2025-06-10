@@ -26,7 +26,7 @@ public class ProductController {
     // 商品登録フォーム画面を表示
     @GetMapping("/products/new")
     public String showAddForm() {
-        return "products/add";  // templates/products/add.html を表示
+    	return "products/add";  // templates/products/add.html を表示
     }
     
     // 商品を新規登録

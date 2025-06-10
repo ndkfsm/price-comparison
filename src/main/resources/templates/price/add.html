@@ -3,8 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>商品追加 - 物価比較アプリ</title>
+	<title>価格入力 - 物価比較アプリ</title>
 	<style>
 		body {
 			font-family: Arial, sans-serif;
@@ -83,19 +82,33 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>商品追加</h1>
+	<div class="container">
+		<h1>価格入力</h1>
 
-        <form th:action="@{/products}" method="post">
-            <div class="form-group">
-                <label for="name">商品名:</label>
-                <input type="text" id="name" name="name" required placeholder="例: 牛乳、パン、りんご">
-            </div>
+		<form th:action="@{/price}" method="post">
+			<div class="form-group">
+				<label for="product">商品:</label>
+				<select id="product" name="productId" required>
+					<option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"></option>
+				</select>
+			</div>
 
-            <button type="submit" class="btn">追加</button>
-            <a th:href="@{/products}" class="btn-secondary">キャンセル</a>
-        </form>
-    </div>
+			<div class="form-group">
+				<label for="store">店舗:</label>
+				<select id="store" name="storeId" required>
+					<option th:each="store : ${stores}" th:value="${store.id}" th:text="${store.name}"></option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="price">価格:</label>
+				<input type="number" id="price" name="price" required>
+			</div>
+
+			<button type="submit" class="btn">登録</button>
+			<a th:href="@{/products}" class="btn-secondary">キャンセル</a>
+		</form>
+	</div>
 </body>
 
 </html>
