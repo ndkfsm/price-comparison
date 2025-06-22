@@ -8,4 +8,5 @@ import com.example.price_comparison.entity.Store;
 @Repository
 public interface StoreRepository extends JpaRepository<Store, Long> {
     // 基本的なCRUD操作は自動で提供される
+	Store findByName(String name);
 }

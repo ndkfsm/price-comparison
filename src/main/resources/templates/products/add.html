@@ -83,19 +83,36 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>商品追加</h1>
+	<div class="container">
+		<h1>商品追加</h1>
 
-        <form th:action="@{/products}" method="post">
+		<form th:action="@{/products}" method="post">
+			<div class="form-group">
+				<label for="name">商品名:</label>
+				<input type="text" id="product_name" name="product_name">
+			</div>
+
             <div class="form-group">
-                <label for="name">商品名:</label>
-                <input type="text" id="name" name="name" required placeholder="例: 牛乳、パン、りんご">
+                <label for="price">価格:</label>
+                <input type="number" id="price" name="price">
             </div>
 
-            <button type="submit" class="btn">追加</button>
-            <a th:href="@{/products}" class="btn-secondary">キャンセル</a>
-        </form>
-    </div>
+            <div class="form-group">
+                <label for="store">購入店舗:</label>
+                <input type="text" id="store_name" name="store_name">
+            </div>
+
+            <div class="form-group">
+                <label for="date">購入日時:</label>
+                <input type="date" id="registered_date" name="registered_date">
+            </div>
+
+			<button type="submit" class="btn">追加</button>
+			<a th:href="@{/products}" class="btn-secondary">キャンセル</a>
+		</form>
+	</div>
+
+
 </body>
 
 </html>
