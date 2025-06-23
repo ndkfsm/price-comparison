@@ -68,20 +68,26 @@
             「新しい商品を追加」ボタンから商品を登録してください。
         </div>
         
-        <table th:if="${!#lists.isEmpty(products)}">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>商品名</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="product : ${products}">
-                    <td th:text="${product.id}"></td>
-                    <td th:text="${product.name}"></td>
-                </tr>
-            </tbody>
-        </table>
+		<table>
+		    <thead>
+		        <tr>
+		            <th>商品ID</th>
+		            <th>商品名</th>
+		            <th>価格</th>
+		            <th>店舗</th>
+		            <th>登録日</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+				<tr th:each="priceInfo : ${priceInfos}">
+				  <td th:text="${priceInfo.product.id}"></td>
+				  <td th:text="${priceInfo.product.name}"></td>
+				  <td th:text="${priceInfo.price}"></td>
+				  <td th:text="${priceInfo.store.name}"></td>
+				  <td th:text="${priceInfo.registeredDate}"></td>
+				</tr>
+		    </tbody>
+		</table>
     </div>
 </body>
 </html>
