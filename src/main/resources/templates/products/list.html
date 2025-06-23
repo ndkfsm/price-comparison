@@ -31,6 +31,8 @@
             border-radius: 5px;
             margin-bottom: 20px;
             display: inline-block;
+            border: none;
+            cursor: pointer;
         }
         .btn:hover {
             background-color: #0056b3;
@@ -61,33 +63,48 @@
     <div class="container">
         <h1>商品一覧</h1>
         
-        <a href="/products/new" class="btn">新しい商品を追加</a>
-        
-        <div th:if="${#lists.isEmpty(products)}" class="empty-message">
-            登録されている商品がありません。<br>
-            「新しい商品を追加」ボタンから商品を登録してください。
-        </div>
-        
-		<table>
-		    <thead>
-		        <tr>
-		            <th>商品ID</th>
-		            <th>商品名</th>
-		            <th>価格</th>
-		            <th>店舗</th>
-		            <th>登録日</th>
-		        </tr>
-		    </thead>
-		    <tbody>
-				<tr th:each="priceInfo : ${priceInfos}">
-				  <td th:text="${priceInfo.product.id}"></td>
-				  <td th:text="${priceInfo.product.name}"></td>
-				  <td th:text="${priceInfo.price}"></td>
-				  <td th:text="${priceInfo.store.name}"></td>
-				  <td th:text="${priceInfo.registeredDate}"></td>
-				</tr>
-		    </tbody>
-		</table>
+        <!-- 商品追加と削除 -->
+        <form th:action="@{/products/delete}" method="post">
+			
+			<div style="display: flex; gap: 10px; margin-bottom: 20px;">
+			    <a href="/products/new" class="btn">新しい商品を追加</a>
+			    <button type="submit" class="btn">選択した商品を削除</button>
+			</div>
+
+            <div th:if="${#lists.isEmpty(priceInfos)}" class="empty-message">
+                登録されている商品がありません。<br>
+                「新しい商品を追加」ボタンから商品を登録してください。
+            </div>
+
+            <table th:if="${!#lists.isEmpty(priceInfos)}">
+                <thead>
+                    <tr>
+                        <th>選択</th>
+                        <th>商品ID</th>
+                        <th>商品名</th>
+                        <th>価格</th>
+                        <th>店舗</th>
+                        <th>登録日</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="priceInfo : ${priceInfos}">
+                        <td><input type="checkbox" name="selectedIds" th:value="${priceInfo.id}"/></td>
+                        <td th:text="${priceInfo.product.id}"></td>
+                        <td th:text="${priceInfo.product.name}"></td>
+                        <td th:text="${priceInfo.price}"></td>
+                        <td th:text="${priceInfo.store.name}"></td>
+                        <td th:text="${priceInfo.registeredDate}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+
     </div>
+
+    <!-- 追加：削除成功ダイアログ -->
+    <script th:if="${deleteSuccess}">
+        alert("選択された商品を削除しました。");
+    </script>
 </body>
 </html>
