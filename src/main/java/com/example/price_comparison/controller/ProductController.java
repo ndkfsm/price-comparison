@@ -1,6 +1,12 @@
 package com.example.price_comparison.controller;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -93,5 +99,35 @@ public class ProductController {
     @GetMapping("/")
     public String home() {
         return "home"; 
+    }
+    
+    @GetMapping("/products/table")
+    public String showPriceTable(Model model) {
+        List<PriceInfo> priceInfos = priceInfoRepository.findAll();
+
+        // 店舗名（列のヘッダー用）を重複なし・並び順ありで保存
+        Set<String> storeNames = new TreeSet<>();
+
+        // 商品名 → { 店舗名 → 値段 } の表
+        Map<String, Map<String, Integer>> tableMap = new LinkedHashMap<>();
+
+        for (PriceInfo info : priceInfos) {
+            String productName = info.getProduct().getName();
+            String storeName = info.getStore().getName();
+            Integer price = info.getPrice();
+            
+            System.out.println("product=" + productName + ", store=" + storeName + ", price=" + price);
+
+            
+            storeNames.add(storeName);
+
+            tableMap.putIfAbsent(productName, new HashMap<>());
+            tableMap.get(productName).put(storeName, price);
+        }
+
+        model.addAttribute("storeNames", storeNames);
+        model.addAttribute("tableMap", tableMap);
+
+        return "products/table";  // templates/products/table.html を表示
     }
 }
