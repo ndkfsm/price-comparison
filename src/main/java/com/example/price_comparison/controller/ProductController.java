@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.price_comparison.entity.PriceInfo;
 import com.example.price_comparison.entity.Product;
 import com.example.price_comparison.entity.Store;
+import com.example.price_comparison.enums.Category;
 import com.example.price_comparison.repository.PriceInfoRepository;
 import com.example.price_comparison.repository.ProductRepository;
 import com.example.price_comparison.repository.StoreRepository;
@@ -37,9 +38,18 @@ public class ProductController {
 
 	// 商品・価格情報一覧を表示（PriceInfoを使う）
 	@GetMapping("/products")
-	public String listProducts(Model model) {
-		model.addAttribute("priceInfos", priceInfoRepository.findAll());
-		return "products/list"; // templates/products/list.html を表示
+	public String listProducts(@RequestParam(name = "category", required = false) String categoryStr, Model model) {
+	    List<PriceInfo> priceInfos;
+
+	    if (categoryStr != null && !categoryStr.isEmpty()) {
+	        Category category = Category.valueOf(categoryStr);
+	        priceInfos = priceInfoRepository.findByProductCategory(category);
+	    } else {
+	        priceInfos = priceInfoRepository.findAll();
+	    }
+
+	    model.addAttribute("priceInfos", priceInfos);
+	    return "products/list";
 	}
 
 	// 商品登録フォーム画面を表示
@@ -54,12 +64,19 @@ public class ProductController {
 			@RequestParam("product_name") String product_name,
 			@RequestParam("price") Integer price,
 			@RequestParam("store_name") String store_name,
-			@RequestParam("registered_date") String registered_date) {
+			@RequestParam("registered_date") String registered_date,
+			@RequestParam("category") String categoryStr) {
 		// 商品を探す or 登録
 		Product product = productRepository.findByName(product_name);
+		Category category = Category.valueOf(categoryStr);
 		if (product == null) {
 			product = new Product(product_name);
+			product.setCategory(category); 
 			productRepository.save(product);
+		} else {
+		    // 既存の商品でもカテゴリを更新したい場合はここでセットする
+		    product.setCategory(category);
+		    productRepository.save(product);
 		}
 
 		// 店舗を探す or 登録

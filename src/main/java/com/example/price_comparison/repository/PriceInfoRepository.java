@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.price_comparison.entity.PriceInfo;
 import com.example.price_comparison.entity.Product;
+import com.example.price_comparison.enums.Category;
 
 @Repository
 public interface PriceInfoRepository extends JpaRepository<PriceInfo, Long> {
@@ -15,4 +16,6 @@ public interface PriceInfoRepository extends JpaRepository<PriceInfo, Long> {
     
     // 商品別の価格情報を価格の安い順で取得
     List<PriceInfo> findByProductOrderByPriceAsc(Product product);
+
+	List<PriceInfo> findByProductCategory(Category category);
 }
