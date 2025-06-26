@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -119,32 +120,38 @@ public class ProductController {
     }
     
     @GetMapping("/products/table")
-    public String showPriceTable(Model model) {
-        List<PriceInfo> priceInfos = priceInfoRepository.findAll();
+    public String showPriceTable(
+            @RequestParam(value = "category", required = false) String category,
+            Model model
+    ) {
+        List<PriceInfo> priceInfos = priceInfoRepository.findAll(); // まず全件とる
 
-        // 店舗名（列のヘッダー用）を重複なし・並び順ありで保存
+        // ★ カテゴリ指定があったら、条件に合うものだけ残す
+        if (category != null && !category.isEmpty()) {
+            priceInfos = priceInfos.stream()
+                .filter(info -> info.getProduct().getCategory() != null)
+                .filter(info -> info.getProduct().getCategory().name().equals(category))
+                .collect(Collectors.toList());
+        }
+
         Set<String> storeNames = new TreeSet<>();
-
-        // 商品名 → { 店舗名 → 値段 } の表
-        Map<String, Map<String, Integer>> tableMap = new LinkedHashMap<>();
+        Map<Product, Map<String, Integer>> tableMap = new LinkedHashMap<>();
 
         for (PriceInfo info : priceInfos) {
-            String productName = info.getProduct().getName();
+            Product product = info.getProduct();
             String storeName = info.getStore().getName();
             Integer price = info.getPrice();
-            
-            System.out.println("product=" + productName + ", store=" + storeName + ", price=" + price);
 
-            
             storeNames.add(storeName);
 
-            tableMap.putIfAbsent(productName, new HashMap<>());
-            tableMap.get(productName).put(storeName, price);
+            tableMap.putIfAbsent(product, new HashMap<>());
+            tableMap.get(product).put(storeName, price);
         }
 
         model.addAttribute("storeNames", storeNames);
         model.addAttribute("tableMap", tableMap);
+        model.addAttribute("selectedCategory", category); // ← 選択状態をHTMLに渡す
 
-        return "products/table";  // templates/products/table.html を表示
+        return "products/table";
     }
 }

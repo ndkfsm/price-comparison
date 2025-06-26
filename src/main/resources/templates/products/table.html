@@ -26,6 +26,8 @@
 			border-radius: 20px;
 			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 			overflow: hidden;
+			position: relative; /* ボタンの絶対位置指定用 */
+			padding-bottom: 80px; /* 下に固定ボタン分の余白 */
 		}
 
 		h1 {
@@ -200,7 +202,7 @@
 
 		@media (max-width: 768px) {
 			.table-wrapper {
-				margin: 0 20px 20px 20px;
+				margin: 20px 20px 20px 20px;
 			}
 		}
 
@@ -211,21 +213,50 @@
 			/* 最小幅を設定 */
 		}
 
-		/* 統計情報を追加（オプション） */
-		.stats-info {
-			background: #f8fafc;
-			padding: 20px 40px;
-			border-top: 1px solid #e2e8f0;
+		/* カテゴリ選択フォーム */
+		.category-form {
+			margin: 20px 40px 20px 40px;
 			font-size: 14px;
-			color: #6b7280;
-			text-align: center;
 		}
 
-		@media (max-width: 768px) {
-			.stats-info {
-				padding: 15px 20px;
-			}
+		.category-form label {
+			font-weight: 600;
+			margin-right: 8px;
 		}
+
+		.category-form select {
+			padding: 6px 8px;
+			border-radius: 6px;
+			border: 1px solid #ccc;
+			font-size: 14px;
+			cursor: pointer;
+		}
+
+		/* 商品一覧に戻るボタンを右下に固定 */
+		.btn-back {
+		    position: fixed;
+		    bottom: 20px;
+		    right: 20px;
+		    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		    color: white;
+		    padding: 12px 20px;
+		    text-decoration: none;
+		    border-radius: 12px;
+		    font-weight: 600;
+		    font-size: 14px;
+		    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+		    transition: background-color 0.3s ease, transform 0.3s ease;
+		    z-index: 1000;
+		    display: inline-block; 
+		}
+
+		.btn-back:hover {
+		    background: linear-gradient(135deg, #5a5bcf 0%, #4b47a7 100%);
+		    transform: translateY(-2px);
+		    text-decoration: none;
+		    color: white;
+		}
+
 	</style>
 </head>
 
@@ -233,7 +264,17 @@
 	<div class="container">
 		<h1>商品×店舗の価格表</h1>
 
-		<a href="/products" class="btn">← 商品一覧に戻る</a>
+		<!-- カテゴリ選択プルダウン -->
+		<form method="get" th:action="@{/products/table}" class="category-form">
+			<label for="category">カテゴリ選択：</label>
+			<select name="category" id="category" onchange="this.form.submit()">
+				<option value="" th:selected="${selectedCategory == null}">すべて表示</option>
+				<option th:each="cat : ${T(com.example.price_comparison.enums.Category).values()}"
+					th:value="${cat.name()}" th:text="${cat.label}"
+					th:selected="${cat.name() == selectedCategory}">
+				</option>
+			</select>
+		</form>
 
 		<div th:if="${#lists.isEmpty(storeNames)}" class="empty-message">
 			表示できる商品データがありません。
@@ -255,6 +296,10 @@
 				</tbody>
 			</table>
 		</div>
+
+		<!-- 右下に固定の「商品一覧に戻る」ボタン -->
+		<a th:href="@{/products}" class="btn-back">← 商品一覧に戻る</a>
+
 	</div>
 </body>
 

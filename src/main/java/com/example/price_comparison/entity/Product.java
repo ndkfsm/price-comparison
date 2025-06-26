@@ -57,4 +57,8 @@ public class Product {
         this.category = category;
     }
     
+    @Override
+    public String toString() {
+        return name; // 商品名だけを表示する
+    }
 }
