@@ -256,6 +256,16 @@
 		    text-decoration: none;
 		    color: white;
 		}
+		
+		.lowest-box {
+			background-color: #e0f2f1; 
+			color: #059669;            
+			padding: 4px 8px;
+			border-radius: 6px;
+			font-weight: bold;
+			display: inline-block;
+			font-size: 14px;
+		}
 
 	</style>
 </head>
@@ -291,7 +301,16 @@
 				<tbody>
 					<tr th:each="entry : ${tableMap}">
 						<td th:text="${entry.key}"></td>
-						<td th:each="store : ${storeNames}" th:text="${entry.value.get(store)} ?: '-'"></td>
+						<td th:each="store : ${storeNames}">
+							<span th:if="${entry.value.get(store) != null}">
+								<span th:if="${entry.value.get(store)} == ${lowestPriceMap.get(entry.key)}"
+									  class="lowest-box"
+									  th:text="${entry.value.get(store)}"></span>
+								<span th:if="${entry.value.get(store)} != ${lowestPriceMap.get(entry.key)}"
+									  th:text="${entry.value.get(store)}"></span>
+							</span>
+							<span th:if="${entry.value.get(store) == null}">-</span>
+						</td>
 					</tr>
 				</tbody>
 			</table>

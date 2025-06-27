@@ -308,13 +308,14 @@
 			<form method="get" th:action="@{/products}" class="filter-form">
 				<label for="category">カテゴリで絞り込む：</label>
 				<select name="category" id="category">
-					<option value="">すべて</option>
-					<option th:each="cat : ${T(com.example.price_comparison.enums.Category).values()}"
-							th:value="${cat.name()}"
-							th:text="${cat.label}"
-							th:selected="${param.category} == ${cat.name()}">
-					</option>
+				    <option value="" th:selected="${selectedCategory == null or selectedCategory == ''}">すべて</option>
+				    <option th:each="cat : ${T(com.example.price_comparison.enums.Category).values()}"
+				            th:value="${cat.name()}"
+				            th:text="${cat.label}"
+				            th:selected="${selectedCategory == cat.name()}">
+				    </option>
 				</select>
+				
 				<button type="submit" class="btn">検索</button>
 			</form>
 		</div>

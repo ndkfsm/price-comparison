@@ -50,8 +50,11 @@ public class ProductController {
 	    }
 
 	    model.addAttribute("priceInfos", priceInfos);
+	    model.addAttribute("selectedCategory", categoryStr);
+
 	    return "products/list";
 	}
+
 
 	// 商品登録フォーム画面を表示
 	@GetMapping("/products/new")
@@ -113,7 +116,6 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    		// templates/home.html を表示
     @GetMapping("/")
     public String home() {
         return "home"; 
@@ -136,6 +138,16 @@ public class ProductController {
 
         Set<String> storeNames = new TreeSet<>();
         Map<Product, Map<String, Integer>> tableMap = new LinkedHashMap<>();
+     // 商品ごとの最安値を記録するマップ
+        Map<Product, Integer> lowestPriceMap = new HashMap<>();
+
+        for (PriceInfo info : priceInfos) {
+            Product product = info.getProduct();
+            int price = info.getPrice();
+
+            // その商品の最安値を記録
+            lowestPriceMap.merge(product, price, Math::min);
+        }
 
         for (PriceInfo info : priceInfos) {
             Product product = info.getProduct();
@@ -151,7 +163,9 @@ public class ProductController {
         model.addAttribute("storeNames", storeNames);
         model.addAttribute("tableMap", tableMap);
         model.addAttribute("selectedCategory", category); // ← 選択状態をHTMLに渡す
-
+        model.addAttribute("lowestPriceMap", lowestPriceMap);
+        
         return "products/table";
     }
+  
 }
