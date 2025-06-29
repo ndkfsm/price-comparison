@@ -1,9 +1,9 @@
 # 🚀 プロジェクト名（例: Price Comparison App）
 
+# Price Comparison App
+
 ![GitHub top language](https://img.shields.io/github/languages/top/ndkfsm/price-comparison)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ndkfsm/price-comparison)
-![Issues](https://img.shields.io/github/issues/ndkfsm/price-comparison)
-![License](https://img.shields.io/github/license/ndkfsm/price-comparison)
 
 ## 概要
 
