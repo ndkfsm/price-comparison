@@ -25,19 +25,44 @@
 ## ディレクトリ構成
 
 ```bash
+cd ./src
+tree /f
+
 ├─main
 │  ├─java
 │  │  └─com
 │  │      └─example
 │  │          └─price_comparison
+│  │              │  PriceComparisonApplication.java
+│  │              │
 │  │              ├─controller
+│  │              │      PriceInfoController.java
+│  │              │      ProductController.java
+│  │              │
 │  │              ├─entity
+│  │              │      PriceInfo.java
+│  │              │      Product.java
+│  │              │      Store.java
+│  │              │
 │  │              ├─enums
+│  │              │      Category.java
+│  │              │
 │  │              └─repository
+│  │                      PriceInfoRepository.java
+│  │                      ProductRepository.java
+│  │                      StoreRepository.java
+│  │
 │  └─resources
+│      │  application.properties
+│      │
 │      ├─static
 │      └─templates
+│          │  home.html
+│          │
 │          └─products
+│                  add.html
+│                  list.html
+│                  table.html
 ```
 
 ## 使用技術
