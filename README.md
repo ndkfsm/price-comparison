@@ -1,26 +1,35 @@
-# 🚀 プロジェクト名（例: Price Comparison App）
+# 物価比較アプリ Ssada!
 
-# Price Comparison App
+# 物価比較アプリ Ssada!
 
 ![GitHub top language](https://img.shields.io/github/languages/top/ndkfsm/price-comparison)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ndkfsm/price-comparison)
 
 ## 概要
 
-このアプリは、複数の店舗の商品価格を比較し、最もお得な価格を素早く見つけるためのツールです。ユーザーは商品を登録し、最新の価格情報を一覧で確認できます。
+複数の店舗で販売されている商品の価格を比較し、ユーザーが最も安い価格を簡単に把握できるようにするWebアプリケーションです。  
+日常の節約や買い物の効率化を目的として開発しました。
+
+プログラミング学習の成果を形にするため、JavaとSpring Bootを用いたWebアプリ開発に取り組みました。
+
+アプリ名の「Ssada!」は、韓国語で「安い」という意味の言葉です。  
+身近な買い物に役立つこのアプリに、親しみやすさと自分自身のルーツを込めて名付けました。
+
 
 ## デモ
 
-※画面イメージ（例）
-![screenshot](./image/top.png)
+※画面イメージ
+![screenshot](./image/home.png)
+![screenshot](.image/add.png)
+![screenshot](.image/list.png)
+![screenshot](.image/table.png)
 
 ## 主な機能
 
 - 商品の登録・編集・削除
-- 店舗ごとの価格比較
-- 登録日の履歴管理
-- 最安値のハイライト表示
-- Webブラウザで簡単操作
+- 店舗ごとの価格登録
+- 価格一覧の表示と最安値の視覚的な強調
+- 商品情報のカテゴリ絞り込み（任意）
 
 ## ディレクトリ構成
 
@@ -67,21 +76,16 @@ tree /f
 
 ## 使用技術
 
-### フロントエンド
-- HTML / CSS
-- Thymeleaf
-
-### バックエンド
-- Spring Boot（Java 17）
-- Spring MVC / Spring Data JPA
+### 言語・フレームワーク
+- Java 21
+- Spring Boot 3.5.0
+- Thymeleaf（テンプレートエンジン）
 
 ### データベース
-- H2 Database（開発用組み込みDB）
-
-### ビルド / 実行環境
-- Maven
-- Git / GitHub
+- H2 Database（ファイル永続化型）
 
 ### その他
-- Lombok（ボイラープレートコード削減）
-- JUnit（テストフレームワーク）
+- Spring Data JPA（ORM）
+- Spring Web（MVC構成）
+- Spring Boot DevTools（自動リロード）
+- Maven（ビルド・依存管理）
