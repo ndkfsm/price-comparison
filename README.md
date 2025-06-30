@@ -1,7 +1,5 @@
 # 物価比較アプリ Ssada!
 
-# 物価比較アプリ Ssada!
-
 ![GitHub top language](https://img.shields.io/github/languages/top/ndkfsm/price-comparison)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ndkfsm/price-comparison)
 
@@ -20,9 +18,9 @@
 
 ※画面イメージ
 ![screenshot](./image/home.png)
-![screenshot](.image/add.png)
-![screenshot](.image/list.png)
-![screenshot](.image/table.png)
+![screenshot](./image/add.png)
+![screenshot](./image/list.png)
+![screenshot](./image/table.png)
 
 ## 主な機能
 
