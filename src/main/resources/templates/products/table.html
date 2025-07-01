@@ -4,322 +4,61 @@
 <head>
 	<meta charset="UTF-8">
 	<title>価格一覧 - 物価比較アプリ Ssada!</title>
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-
-		body {
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			min-height: 100vh;
-			padding: 20px;
-		}
-
-		.container {
-			max-width: 1200px;
-			margin: 0 auto;
-			background: rgba(255, 255, 255, 0.95);
-			backdrop-filter: blur(20px);
-			border-radius: 20px;
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-			overflow: hidden;
-			position: relative; /* ボタンの絶対位置指定用 */
-			padding-bottom: 80px; /* 下に固定ボタン分の余白 */
-		}
-
-		h1 {
-			background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-			color: white;
-			padding: 40px;
-			margin: 0;
-			font-size: 2.5rem;
-			font-weight: 700;
-			text-align: center;
-			text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-			border: none;
-		}
-
-		.btn {
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			color: white;
-			padding: 12px 24px;
-			text-decoration: none;
-			border-radius: 12px;
-			border: none;
-			cursor: pointer;
-			font-weight: 600;
-			font-size: 14px;
-			transition: all 0.3s ease;
-			display: inline-flex;
-			align-items: center;
-			gap: 8px;
-			margin: 30px 40px 20px 40px;
-		}
-
-		.btn:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-			text-decoration: none;
-			color: white;
-		}
-
-		.empty-message {
-			text-align: center;
-			padding: 80px 40px;
-			color: #6b7280;
-			font-size: 1.1rem;
-		}
-
-		.empty-message::before {
-			content: '📊';
-			display: block;
-			font-size: 4rem;
-			margin-bottom: 20px;
-			opacity: 0.5;
-		}
-
-		table {
-			width: 100%;
-			border-collapse: separate;
-			border-spacing: 0;
-			margin: 0 40px 40px 40px;
-			width: calc(100% - 80px);
-			background: white;
-			border-radius: 16px;
-			overflow: hidden;
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-		}
-
-		th {
-			background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-			color: #374151;
-			font-weight: 700;
-			padding: 20px 16px;
-			text-align: left;
-			font-size: 14px;
-			text-transform: uppercase;
-			letter-spacing: 0.5px;
-			border: none;
-		}
-
-		td {
-			padding: 20px 16px;
-			border-bottom: 1px solid #f1f5f9;
-			color: #374151;
-			font-size: 14px;
-			transition: all 0.3s ease;
-			border: none;
-		}
-
-		/* 最後の行のボーダーを削除 */
-		tr:last-child td {
-			border-bottom: none;
-		}
-
-		/* ホバー効果 */
-		tr:hover td {
-			background-color: #f8fafc;
-		}
-
-		/* 商品名のスタイル */
-		td:first-child {
-			font-weight: 600;
-			color: #1e293b;
-		}
-
-		/* 価格のスタイル調整 */
-		td:not(:first-child) {
-			font-weight: 600;
-			color: #059669;
-			font-size: 16px;
-		}
-
-		/* ダッシュ（-）のスタイル */
-		td:not(:first-child):contains('-') {
-			color: #9ca3af;
-			font-style: italic;
-		}
-
-		/* レスポンシブデザイン */
-		@media (max-width: 768px) {
-			body {
-				padding: 10px;
-			}
-
-			.container {
-				border-radius: 16px;
-			}
-
-			h1 {
-				padding: 30px 20px;
-				font-size: 2rem;
-			}
-
-			.btn {
-				margin: 20px;
-			}
-
-			table {
-				margin: 0 20px 20px 20px;
-				width: calc(100% - 40px);
-			}
-
-			th,
-			td {
-				padding: 12px 8px;
-				font-size: 13px;
-			}
-
-			.empty-message {
-				padding: 60px 20px;
-			}
-		}
-
-		/* より小さなスクリーンでのテーブル調整 */
-		@media (max-width: 480px) {
-			table {
-				font-size: 12px;
-			}
-
-			th,
-			td {
-				padding: 10px 6px;
-			}
-
-			h1 {
-				font-size: 1.8rem;
-			}
-		}
-
-		/* テーブルが横にスクロールできるようにする */
-		.table-wrapper {
-			overflow-x: auto;
-			margin: 0 40px 40px 40px;
-		}
-
-		@media (max-width: 768px) {
-			.table-wrapper {
-				margin: 20px 20px 20px 20px;
-			}
-		}
-
-		table {
-			margin: 0;
-			width: 100%;
-			min-width: 600px;
-			/* 最小幅を設定 */
-		}
-
-		/* カテゴリ選択フォーム */
-		.category-form {
-			margin: 20px 40px 20px 40px;
-			font-size: 14px;
-		}
-
-		.category-form label {
-			font-weight: 600;
-			margin-right: 8px;
-		}
-
-		.category-form select {
-			padding: 6px 8px;
-			border-radius: 6px;
-			border: 1px solid #ccc;
-			font-size: 14px;
-			cursor: pointer;
-		}
-
-		/* 商品一覧に戻るボタンを右下に固定 */
-		.btn-back {
-		    position: fixed;
-		    bottom: 20px;
-		    right: 20px;
-		    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		    color: white;
-		    padding: 12px 20px;
-		    text-decoration: none;
-		    border-radius: 12px;
-		    font-weight: 600;
-		    font-size: 14px;
-		    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-		    transition: background-color 0.3s ease, transform 0.3s ease;
-		    z-index: 1000;
-		    display: inline-block; 
-		}
-
-		.btn-back:hover {
-		    background: linear-gradient(135deg, #5a5bcf 0%, #4b47a7 100%);
-		    transform: translateY(-2px);
-		    text-decoration: none;
-		    color: white;
-		}
-		
-		.lowest-box {
-			background-color: #e0f2f1; 
-			color: #059669;            
-			padding: 4px 8px;
-			border-radius: 6px;
-			font-weight: bold;
-			display: inline-block;
-			font-size: 14px;
-		}
-
-	</style>
+	<link rel="stylesheet" th:href="@{/css/table.css}">
 </head>
 
 <body>
 	<div class="container">
 		<h1>価格一覧</h1>
 
+		<div class="content">
+			<!-- カテゴリ選択プルダウン -->
+			<form method="get" th:action="@{/products/table}" class="category-form">
+				<label for="category">カテゴリ選択：</label>
+				<select name="category" id="category" onchange="this.form.submit()">
+					<option value="" th:selected="${selectedCategory == null}">すべて表示</option>
+					<option th:each="cat : ${T(com.example.price_comparison.enums.Category).values()}"
+						th:value="${cat.name()}" th:text="${cat.label}"
+						th:selected="${cat.name() == selectedCategory}">
+					</option>
+				</select>
+			</form>
 
-		<!-- カテゴリ選択プルダウン -->
-		<form method="get" th:action="@{/products/table}" class="category-form">
-			<label for="category">カテゴリ選択：</label>
-			<select name="category" id="category" onchange="this.form.submit()">
-				<option value="" th:selected="${selectedCategory == null}">すべて表示</option>
-				<option th:each="cat : ${T(com.example.price_comparison.enums.Category).values()}"
-					th:value="${cat.name()}" th:text="${cat.label}"
-					th:selected="${cat.name() == selectedCategory}">
-				</option>
-			</select>
-		</form>
+			<div th:if="${#lists.isEmpty(storeNames)}" class="empty-message">
+				表示できる商品データがありません。
+			</div>
 
-		<div th:if="${#lists.isEmpty(storeNames)}" class="empty-message">
-			表示できる商品データがありません。
-		</div>
-
-		<div class="table-wrapper" th:if="${!#lists.isEmpty(storeNames)}">
-			<table>
-				<thead>
-					<tr>
-						<th>商品名</th>
-						<th th:each="store : ${storeNames}" th:text="${store}"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="entry : ${tableMap}">
-						<td th:text="${entry.key}"></td>
-						<td th:each="store : ${storeNames}">
-							<span th:if="${entry.value.get(store) != null}">
-								<span th:if="${entry.value.get(store)} == ${lowestPriceMap.get(entry.key)}"
-									  class="lowest-box"
-									  th:text="${entry.value.get(store)}"></span>
-								<span th:if="${entry.value.get(store)} != ${lowestPriceMap.get(entry.key)}"
-									  th:text="${entry.value.get(store)}"></span>
-							</span>
-							<span th:if="${entry.value.get(store) == null}">-</span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="table-wrapper" th:if="${!#lists.isEmpty(storeNames)}">
+				<div class="table-scroll">
+					<table>
+						<thead>
+							<tr>
+								<th>商品名</th>
+								<th th:each="store : ${storeNames}" th:text="${store}"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="entry : ${tableMap}">
+								<td th:text="${entry.key}"></td>
+								<td th:each="store : ${storeNames}">
+									<span th:if="${entry.value.get(store) != null}">
+										<span th:if="${entry.value.get(store)} == ${lowestPriceMap.get(entry.key)}"
+											  class="lowest-box"
+											  th:text="${entry.value.get(store)}"></span>
+										<span th:if="${entry.value.get(store)} != ${lowestPriceMap.get(entry.key)}"
+											  th:text="${entry.value.get(store)}"></span>
+									</span>
+									<span th:if="${entry.value.get(store) == null}">-</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 
 		<!-- 右下に固定の「商品一覧に戻る」ボタン -->
 		<a th:href="@{/products}" class="btn-back">← 商品一覧に戻る</a>
-
 	</div>
 </body>
 

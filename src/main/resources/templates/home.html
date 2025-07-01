@@ -1,133 +1,16 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>ホーム - 物価比較アプリ Ssada!</title>
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-
-		body {
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			min-height: 100vh;
-			padding: 20px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-
-		.container {
-			max-width: 600px;
-			margin: 0 auto;
-			background: rgba(255, 255, 255, 0.95);
-			backdrop-filter: blur(20px);
-			border-radius: 20px;
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-			overflow: hidden;
-			text-align: center;
-		}
-
-		h1 {
-			background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-			color: white;
-			padding: 40px;
-			margin: 0;
-			font-size: 2.5rem;
-			font-weight: 700;
-			text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-			border: none;
-		}
-
-		.welcome-content {
-			padding: 40px;
-		}
-
-		.welcome-text {
-			color: #374151;
-			font-size: 1.1rem;
-			line-height: 1.6;
-			margin-bottom: 40px;
-		}
-
-		.btn {
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			color: white;
-			padding: 16px 32px;
-			text-decoration: none;
-			border-radius: 12px;
-			border: none;
-			cursor: pointer;
-			font-weight: 600;
-			font-size: 16px;
-			transition: all 0.3s ease;
-			display: inline-flex;
-			align-items: center;
-			gap: 8px;
-		}
-
-		.btn:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-			text-decoration: none;
-			color: white;
-		}
-
-		.btn::after {
-			content: '→';
-			font-size: 18px;
-			transition: transform 0.3s ease;
-		}
-
-		.btn:hover::after {
-			transform: translateX(4px);
-		}
-
-		/* レスポンシブデザイン */
-		@media (max-width: 768px) {
-			body {
-				padding: 10px;
-			}
-
-			.container {
-				border-radius: 16px;
-			}
-
-			h1 {
-				padding: 30px 20px;
-				font-size: 2rem;
-			}
-
-			.welcome-content {
-				padding: 30px 20px;
-			}
-
-			.btn {
-				padding: 14px 28px;
-				font-size: 15px;
-			}
-		}
-
-		@media (max-width: 480px) {
-			h1 {
-				font-size: 1.8rem;
-			}
-
-			.welcome-text {
-				font-size: 1rem;
-			}
-		}
-	</style>
+	<title>物価比較アプリ - Ssada!</title>
+	<link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 
 <body>
 	<div class="container">
-		<h1>物価比較アプリ<br>Ssada!<br></h1>
+		<h1>物価比較アプリ<br>Ssada!</h1>
 		<div class="welcome-content">
 			<p class="welcome-text">このアプリでは、商品とその価格を店舗ごとに<br>登録・一覧・比較できます。</p>
 			<a href="/products" class="btn">商品一覧へ</a>
