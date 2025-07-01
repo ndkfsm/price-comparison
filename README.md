@@ -9,10 +9,10 @@
 日常の節約や買い物の効率化を目的として開発しました。
 
 このアプリの設計・実装には、ChatGPT、Claudを活用しました。  
-コードの理解や構成の補助として利用しながら、自分自身で動作確認・修正を繰り返しながら仕上げました。
+コードの理解や構成の補助として利用しながら、自分自身で動作確認・修正を繰り返し仕上げました。
 
 アプリ名の「Ssada!」は、韓国語で「安い」という意味の言葉です。  
-身近な買い物に役立つこのアプリに、親しみやすさと自分自身のルーツを込めて名付けました。
+身近な買い物に役立つこのアプリに、親しみやすさと韓国語にまつわるつながりを込めて名付けました。
 
 
 ## デモ
@@ -69,6 +69,12 @@ tree /f
 │      │  application.properties
 │      │
 │      ├─static
+│      │  └─css
+│      │          add.css
+│      │          home.css
+│      │          list.css
+│      │          table.css
+│      │
 │      └─templates
 │          │  home.html
 │          │
@@ -76,6 +82,13 @@ tree /f
 │                  add.html
 │                  list.html
 │                  table.html
+│
+└─test
+    └─java
+        └─com
+            └─example
+                └─price_comparison
+                        PriceComparisonApplicationTests.java
 ```
 
 ## 使用技術
